@@ -1,0 +1,52 @@
+openapi: 3.0.0
+info:
+  title: Auth API
+  version: '1.0'
+  contact:
+    name: JohnOGram
+    url: 'https://github.com/Johnogram/'
+  description: POC API to test Stoplight
+servers:
+  - url: 'http://localhost:3000'
+paths:
+  /users:
+    post:
+      summary: Create User
+      tags:
+        - user
+      responses: {}
+      operationId: post-users
+    get:
+      summary: Get Users
+      tags:
+        - user
+      responses: {}
+      operationId: get-users
+  '/users/{userId}':
+    parameters:
+      - schema:
+          type: string
+        name: userId
+        in: path
+        required: true
+    get:
+      summary: Get specific user
+      tags:
+        - user
+      responses: {}
+      operationId: get-users-userId
+    put:
+      summary: Update user
+      tags:
+        - user
+      responses: {}
+      operationId: put-users-userId
+    delete:
+      summary: Delete user
+      tags:
+        - user
+      responses: {}
+      operationId: delete-users-userId
+components:
+  schemas: {}
+  securitySchemes: {}
