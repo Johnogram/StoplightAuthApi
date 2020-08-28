@@ -20,7 +20,15 @@ paths:
       summary: Get Users
       tags:
         - user
-      responses: {}
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
       operationId: get-users
   '/users/{userId}':
     parameters:
@@ -33,7 +41,13 @@ paths:
       summary: Get specific user
       tags:
         - user
-      responses: {}
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
       operationId: get-users-userId
     put:
       summary: Update user
@@ -48,5 +62,26 @@ paths:
       responses: {}
       operationId: delete-users-userId
 components:
-  schemas: {}
+  schemas:
+    User:
+      title: User
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        authToken:
+          type: string
+        lastActive:
+          type: string
+          format: date-time
+      required:
+        - id
+        - name
+        - authToken
+        - lastActive
+      x-examples: {}
+      description: ''
   securitySchemes: {}
