@@ -29,7 +29,65 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/User'
+              examples:
+                All Users:
+                  value:
+                    - id: 437efeff-51fb-87b1-b27d-bfee2bbb7f69
+                      name: Kyrstin Frankton
+                      authToken: 73a9dab4b3e31bba324c0dbc130d4a81ff45fd46
+                      lastActive: '1979-07-14T12:53:40.306Z'
+                    - id: bbeb0633-4308-921b-a565-9e94135cf734
+                      name: Geoffrey Perfect
+                      authToken: 8b276ac1b916735bc4741f3c48e89d954ee5bc10
+                      lastActive: '1944-10-02T16:46:55.781Z'
+                    - id: 96641b4a-32aa-d92f-4bac-f062b240f172
+                      name: Wilfred Hurtic
+                      authToken: 66efde6145d07037a8b4e047b001dc4bf5bd49f4
+                      lastActive: '1978-08-26T17:36:42.529Z'
+                    - id: 2527875a-64c0-0794-9756-704ebd5e7249
+                      name: Jermain Velden
+                      authToken: 94130bf9b5e152e255cbf9689ee5737b28b6e5b9
+                      lastActive: '1955-09-03T09:49:06.924Z'
+                    - id: 646a4bac-d0e7-937f-ad8e-1a816eb1251a
+                      name: Angelico Gligoraci
+                      authToken: 4ad6aa4bd698934b9369c59285f5f975ef1d436d
+                      lastActive: '2003-11-22T17:02:00.363Z'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/4xx-Error'
+              examples:
+                Unauthorized:
+                  value:
+                    message: 'You must be logged in to do that!'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/4xx-Error'
+              examples:
+                Forbidden:
+                  value:
+                    message: "You don't have permission to do that!"
+        '404':
+          description: Not Found
+          headers: {}
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/4xx-Error'
+              examples:
+                Not Found:
+                  value:
+                    message: Resource not found
+                    resourceId: 3921f54d-911b-48ad-864c-8e14e10f9208
+        '500':
+          description: Internal Server Error
       operationId: get-users
+      description: Get all users
   '/users/{userId}':
     parameters:
       - schema:
@@ -48,6 +106,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
+              examples: {}
       operationId: get-users-userId
     put:
       summary: Update user
@@ -66,6 +125,13 @@ components:
     User:
       title: User
       type: object
+      x-examples:
+        Example User:
+          id: 438cd80a-76c8-4099-abf9-4f6db07f7e8b
+          name: Rod Ponter
+          authToken: 2785384a-d1ea-488b-8797-4ccd363ecc44
+          lastActive: '2019-09-04T19:50:24.000Z'
+      description: Model for a user
       properties:
         id:
           type: string
@@ -82,6 +148,24 @@ components:
         - name
         - authToken
         - lastActive
-      x-examples: {}
-      description: ''
+    4xx-Error:
+      title: 4xx-Error
+      type: object
+      description: Response structure for 400 type errors
+      properties:
+        message:
+          type: string
+        resourceId:
+          type: string
+          format: uuid
+      required:
+        - message
+      x-examples:
+        '401':
+          message: 'You must be logged in to do that!'
+        '403':
+          message: "You don't have permission to do that!"
+        '404':
+          message: Resource not found
+          resourceId: 3921f54d-911b-48ad-864c-8e14e10f9208
   securitySchemes: {}
